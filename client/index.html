@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/favicon.png" sizes="256x256" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#14532D" />
+    <title>Acadexa — Your Academic Journey, Simplified.</title>
+    <meta name="description" content="Acadexa provides practical and lab manual support, assignment and notes formatting, project documentation, presentation and viva preparation, and technical or research support — billed per item, with written quotations and private document handling." />
+    <meta property="og:title" content="Acadexa — Your Academic Work, Made Simpler." />
+    <meta property="og:image" content="/acadexa-logo.png" />
+    <meta property="og:site_name" content="Acadexa" />
+    <meta property="og:description" content="Professional academic support. Personalized guidance. Clear quotations, organised order tracking and privacy-conscious document handling." />
+    <meta property="og:type" content="website" />
+    <link rel="canonical" href="https://acadexa.example/" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <style>
+      /* ------------------------------------------------------------------
+         First-paint intro. Paints instantly, before the JS bundle loads, so a
+         first-time visitor never sees a blank white screen. React hands this
+         off to <Preloader /> which performs the reveal.
+         ------------------------------------------------------------------ */
+      #sd-intro {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: grid;
+        place-items: center;
+        background: #fafaf7;
+        background-image: radial-gradient(60% 55% at 50% 40%, #eef5ef 0%, #fafaf7 70%);
+        font-family: 'Sora', 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      #sd-intro .sd-inner { display: flex; flex-direction: column; align-items: center; padding: 24px; }
+      /* Dark theme: the splash must match the page it hands over to. */
+      .dark #sd-intro {
+        background: #0a1020;
+        background-image: radial-gradient(60% 55% at 50% 40%, #10241c 0%, #0a1020 70%);
+      }
+      .dark #sd-intro .sd-word { color: #4ade80; }
+      .dark #sd-intro .sd-tag { color: #93a4bd; }
+      .dark #sd-intro .sd-bar { background: rgba(74, 222, 128, 0.2); }
+      .dark #sd-intro .sd-bar span { background: #4ade80; }
+      /* The brand mark is dark green; lift it on dark surfaces. */
+      .dark #sd-intro .sd-logo { content: url('/acadexa-logo-dark.png'); }
+      #sd-intro .sd-logo {
+        width: clamp(58px, 13vw, 76px);
+        height: auto;
+        opacity: 0;
+        transform: scale(0.86) translateY(6px);
+        animation: sd-logo-in 620ms cubic-bezier(0.22, 1, 0.36, 1) 40ms forwards;
+      }
+      #sd-intro .sd-word {
+        display: flex;
+        margin-top: 18px;
+        font-size: clamp(24px, 6.4vw, 38px);
+        font-weight: 800;
+        letter-spacing: 0.16em;
+        color: #14532d;
+        line-height: 1;
+      }
+      #sd-intro .sd-word span {
+        display: inline-block;
+        opacity: 0;
+        transform: translateY(10px);
+        animation: sd-letter-in 400ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      }
+      #sd-intro .sd-word span:nth-child(1) { animation-delay: 120ms; }
+      #sd-intro .sd-word span:nth-child(2) { animation-delay: 160ms; }
+      #sd-intro .sd-word span:nth-child(3) { animation-delay: 200ms; }
+      #sd-intro .sd-word span:nth-child(4) { animation-delay: 240ms; }
+      #sd-intro .sd-word span:nth-child(5) { animation-delay: 280ms; }
+      #sd-intro .sd-word span:nth-child(6) { animation-delay: 320ms; }
+      #sd-intro .sd-word span:nth-child(7) { animation-delay: 360ms; }
+      #sd-intro .sd-tag {
+        margin-top: 10px;
+        font-size: clamp(9.5px, 2.4vw, 11px);
+        font-weight: 600;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        color: #6b7280;
+        opacity: 0;
+        animation: sd-fade-in 420ms ease 400ms forwards;
+      }
+      #sd-intro .sd-bar {
+        position: relative;
+        margin-top: 22px;
+        width: clamp(96px, 26vw, 132px);
+        height: 2px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: rgba(20, 83, 45, 0.14);
+      }
+      #sd-intro .sd-bar span {
+        position: absolute;
+        inset: 0;
+        border-radius: 999px;
+        background: #14532d;
+        transform-origin: left center;
+        transform: scaleX(0);
+        animation: sd-bar 820ms cubic-bezier(0.5, 0, 0.2, 1) 100ms forwards;
+      }
+      @keyframes sd-logo-in { to { opacity: 1; transform: scale(1) translateY(0); } }
+      @keyframes sd-letter-in { to { opacity: 1; transform: translateY(0); } }
+      @keyframes sd-fade-in { to { opacity: 1; } }
+      @keyframes sd-bar { to { transform: scaleX(1); } }
+
+      /* Repeat visits in the same session, and reduced-motion users, skip it. */
+      .sd-skip-intro #sd-intro { display: none; }
+      @media (prefers-reduced-motion: reduce) {
+        #sd-intro .sd-logo, #sd-intro .sd-word span, #sd-intro .sd-tag { opacity: 1; transform: none; animation: none; }
+        #sd-intro .sd-bar span { transform: scaleX(1); animation: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      /* Light / dark theme, applied before the first paint so nothing flashes. */
+      (function () {
+        try {
+          var pref = localStorage.getItem('acadexa_theme') || 'system';
+          var dark = pref === 'dark' || (pref === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+          if (dark) {
+            document.documentElement.classList.add('dark');
+            document.documentElement.style.colorScheme = 'dark';
+          }
+        } catch (e) { /* storage blocked: default to light */ }
+      })();
+      /* Decided before first paint so there is never a flash of intro on return visits. */
+      (function () {
+        try {
+          var seen = sessionStorage.getItem('acadexa_intro_seen');
+          var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          if (seen || calm) document.documentElement.classList.add('sd-skip-intro');
+        } catch (e) { /* storage blocked: show the intro */ }
+      })();
+    </script>
+    <div id="sd-intro" role="status" aria-label="Loading Acadexa">
+      <div class="sd-inner">
+        <img class="sd-logo" src="/acadexa-logo.png" alt="" aria-hidden="true" />
+        <div class="sd-word" aria-hidden="true"><span>A</span><span>C</span><span>A</span><span>D</span><span>E</span><span>X</span><span>A</span></div>
+        <div class="sd-tag" aria-hidden="true">Your Academic Journey, Simplified</div>
+        <div class="sd-bar" aria-hidden="true"><span></span></div>
+      </div>
+    </div>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

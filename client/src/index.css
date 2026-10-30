@@ -1,0 +1,255 @@
+@import 'tailwindcss';
+@import '@fontsource/noto-sans/400.css';
+@import '@fontsource/noto-sans/700.css';
+@import '@fontsource/noto-sans-devanagari/400.css';
+@import '@fontsource/noto-sans-devanagari/700.css';
+@import '@fontsource/noto-sans-gujarati/400.css';
+@import '@fontsource/noto-sans-gujarati/700.css';
+
+/* Class-based dark mode: <html class="dark">. Chosen over the media query so a
+   user's toggle can override the operating-system preference. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-forest: #14532d;
+  --color-forest-700: #1a6b39;
+  --color-emerald: #10b981;
+  --color-mint: #ecfdf5;
+  --color-canvas: #fafaf7;
+  --color-ink: #172033;
+  --color-muted: #64748b;
+  --color-line: #e2e8f0;
+  --color-amber: #f4b740;
+  --color-danger: #dc2626;
+  --color-success: #16a34a;
+
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Sora', 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+  --radius-xl2: 1.25rem;
+
+  --shadow-soft: 0 1px 2px rgba(23, 32, 51, 0.04), 0 12px 32px -12px rgba(20, 83, 45, 0.18);
+  --shadow-lift: 0 2px 4px rgba(23, 32, 51, 0.04), 0 24px 48px -16px rgba(20, 83, 45, 0.28);
+}
+
+
+/* ---------------------------------------------------------------------------
+   Dark theme.
+   The app is written against semantic tokens (canvas, ink, muted, line, mint),
+   so most of the theme flips by redefining those variables. The literal
+   utilities the design also uses (bg-white, slate shades, alert tints) are
+   remapped below so they follow the theme too.
+   --------------------------------------------------------------------------- */
+.dark {
+  --color-canvas: #0a1020;
+  --color-ink: #e8eef8;
+  --color-muted: #93a4bd;
+  --color-line: #1f2b3f;
+  --color-mint: #10241c;
+  /* Accent green: bright enough to read as text on a dark surface. */
+  --color-forest: #4ade80;
+  --color-forest-700: #22c55e;
+  --color-emerald: #34d399;
+  color-scheme: dark;
+}
+
+/* Green fills stay dark so their white labels keep their contrast. The accent
+   variables are bright in dark mode (they double as text colours), so any
+   element that uses them as a *background* behind white text is pinned here. */
+.dark .bg-forest { background-color: #14532d; }
+.dark .bg-forest-700 { background-color: #1a6b39; }
+.dark .hover\:bg-forest-700:hover { background-color: #1a6b39; }
+.dark .bg-emerald { background-color: #0b7a56; }
+.dark .hover\:bg-\[\#0ea472\]:hover { background-color: #0e8b5f; }
+.dark .bg-amber { background-color: #a16207; }
+.dark .bg-success { background-color: #15803d; }
+/* Translucent accents that gained contrast from the brighter token. */
+.dark .bg-emerald\/25, .dark .bg-emerald\/30 { background-color: rgba(16, 185, 129, 0.14); }
+
+/* Cards, panels and overlays that were painted literal white. */
+.dark .bg-white { background-color: #111b2c; }
+.dark .bg-white\/97 { background-color: rgba(17, 27, 44, 0.97); }
+.dark .bg-white\/90 { background-color: rgba(17, 27, 44, 0.9); }
+.dark .bg-white\/80 { background-color: rgba(17, 27, 44, 0.82); }
+.dark .bg-white\/60 { background-color: rgba(17, 27, 44, 0.6); }
+.dark .card-surface { background: #111b2c; }
+
+/* Neutral greys the design used for text and chips. */
+.dark .text-slate-400 { color: #7d8ea6; }
+.dark .text-slate-300 { color: #6b7d95; }
+.dark .text-slate-500 { color: #a4b3c8; }
+.dark .text-slate-600 { color: #b6c3d5; }
+.dark .text-slate-700 { color: #cbd5e1; }
+.dark .text-slate-900 { color: #e8eef8; }
+.dark .bg-slate-50 { background-color: #162133; }
+.dark .bg-slate-100 { background-color: #182339; }
+.dark .bg-slate-200 { background-color: #1e2b41; }
+.dark .border-slate-200 { border-color: #22304a; }
+.dark .border-slate-300 { border-color: #2b3b55; }
+.dark .divide-slate-200 > * + * { border-color: #22304a; }
+
+/* Status tints used by alert boxes and nudges. */
+.dark .bg-red-50 { background-color: rgba(127, 29, 29, 0.28); }
+.dark .border-red-200 { border-color: rgba(248, 113, 113, 0.35); }
+.dark .bg-amber-50 { background-color: rgba(120, 53, 15, 0.3); }
+.dark .border-amber-200 { border-color: rgba(251, 191, 36, 0.34); }
+.dark .text-amber-900 { color: #fcd34d; }
+.dark .text-amber-700 { color: #fbbf24; }
+.dark .bg-emerald-50 { background-color: rgba(6, 78, 59, 0.4); }
+
+/* Decorative fills that assumed a pale page. */
+.dark .mesh-hero {
+  background:
+    radial-gradient(60% 60% at 12% 8%, rgba(16, 185, 129, 0.14) 0%, transparent 60%),
+    radial-gradient(45% 45% at 88% 12%, rgba(5, 150, 105, 0.12) 0%, transparent 55%),
+    radial-gradient(50% 50% at 70% 90%, rgba(244, 183, 64, 0.08) 0%, transparent 60%);
+}
+.dark .grain { background-image: radial-gradient(rgba(148, 197, 172, 0.09) 1px, transparent 1px); }
+.dark .shimmer { background: linear-gradient(90deg, #16213a 25%, #1c2942 37%, #16213a 63%); background-size: 400% 100%; }
+.dark ::selection { background: #14532d; color: #d1fae5; }
+.dark ::-webkit-scrollbar-thumb { background: #2b3b55; border-color: var(--color-canvas); }
+.dark ::-webkit-scrollbar-thumb:hover { background: #3a4d6b; }
+
+/* Keep form controls and the native picker on theme. */
+.dark input, .dark textarea, .dark select { color-scheme: dark; }
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    color: var(--color-ink);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-forest);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+  ::selection {
+    background: #d1fae5;
+    color: #064e3b;
+  }
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 999px; border: 3px solid var(--color-canvas); }
+  ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+}
+
+@layer utilities {
+  .container-page {
+    width: 100%;
+    max-width: 76rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .container-page { padding-inline: 2rem; }
+  }
+  .text-balance { text-wrap: balance; }
+  /* Wash behind the promotional (offer) card. Defined here rather than as Tailwind
+     gradient utilities so the dark theme can restate it: a white wash would make
+     the card's light text unreadable in dark mode. */
+  .promo-wash {
+    background-image: linear-gradient(to bottom right, var(--color-mint), #fff 55%, #fff);
+  }
+  .intro-surface {
+    background-image: radial-gradient(60% 55% at 50% 40%, #eef5ef 0%, #fafaf7 70%);
+  }
+  .dark .intro-surface {
+    background-image: radial-gradient(60% 55% at 50% 40%, #10241c 0%, #0a1020 70%);
+  }
+  .dark .promo-wash {
+    background-image: linear-gradient(to bottom right, #10241c, #111b2c 60%, #111b2c);
+  }
+  .grain {
+    background-image: radial-gradient(rgba(20, 83, 45, 0.055) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+  .mesh-hero {
+    background:
+      radial-gradient(60% 60% at 12% 8%, #ecfdf5 0%, transparent 60%),
+      radial-gradient(45% 45% at 88% 12%, #e6f7ef 0%, transparent 55%),
+      radial-gradient(50% 50% at 70% 90%, #fdf6e6 0%, transparent 60%);
+  }
+  .card-surface {
+    background: #fff;
+    border: 1px solid var(--color-line);
+    border-radius: 1rem;
+    box-shadow: var(--shadow-soft);
+  }
+  .shimmer {
+    background: linear-gradient(90deg, #f1f5f9 25%, #e9eef5 37%, #f1f5f9 63%);
+    background-size: 400% 100%;
+    animation: shimmer 1.4s ease infinite;
+  }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+}
+
+@keyframes shimmer {
+  0% { background-position: 100% 50%; }
+  100% { background-position: 0 50%; }
+}
+@keyframes floaty {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-9px); }
+}
+@keyframes pulseRing {
+  0% { transform: scale(0.9); opacity: 0.7; }
+  70% { transform: scale(1.35); opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes drawLine {
+  from { stroke-dashoffset: 240; }
+  to { stroke-dashoffset: 0; }
+}
+
+/* Script-aware typography: Devanagari and Gujarati need looser tracking than
+   the tight English display scale, plus their own font families so vowels and
+   conjunct consonants render instead of falling back to system fonts. The
+   provider writes data-lang="hi|gu|en" on <html>. These unlayered rules sit
+   above the Tailwind utility layer so tracking utilities are overridden. */
+html[data-lang='hi'] {
+  --font-sans: 'Noto Sans Devanagari', 'Noto Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Noto Sans Devanagari', 'Noto Sans', 'Sora', ui-sans-serif, system-ui, sans-serif;
+}
+html[data-lang='gu'] {
+  --font-sans: 'Noto Sans Gujarati', 'Noto Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Noto Sans Gujarati', 'Noto Sans', 'Sora', ui-sans-serif, system-ui, sans-serif;
+}
+html[data-lang='hi'] h1,
+html[data-lang='hi'] h2,
+html[data-lang='hi'] h3,
+html[data-lang='hi'] h4,
+html[data-lang='gu'] h1,
+html[data-lang='gu'] h2,
+html[data-lang='gu'] h3,
+html[data-lang='gu'] h4 {
+  letter-spacing: 0;
+}
+html[data-lang='hi'] [class*='tracking-'],
+html[data-lang='gu'] [class*='tracking-'] {
+  letter-spacing: normal;
+}
+
+.animate-floaty { animation: floaty 7s ease-in-out infinite; }
+.animate-floaty-slow { animation: floaty 9.5s ease-in-out infinite; }
+.animate-pulse-ring { animation: pulseRing 2.6s cubic-bezier(0.24, 0, 0.38, 1) infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
